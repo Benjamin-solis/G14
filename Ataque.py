@@ -1,9 +1,9 @@
 class ataque:
-    def __init__(self, nombre, tipo_ataque, objetivo, daño, precision, recarga):
+    def __init__(self, name, type_attack, objetive, damage, precision, recharge):
 
-        self.nombre= nombre 
-        self.tipo_ataque= tipo_ataque
-        self.objetivo= objetivo
-        self.daño= daño
+        self.name= name 
+        self.type_attack= type_attack
+        self.objetive= objetive
+        self.damage= damage
         self.precision= precision
-        self.recarga= recarga
+        self.recharge= recharge
