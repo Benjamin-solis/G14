@@ -1,1 +1,1 @@
-print("Hola! soy un robot muy bonito")
+print("Hola! soy un robot")
