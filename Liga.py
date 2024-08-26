@@ -30,9 +30,20 @@ class liga:
 
     def pelea(self, r1, r2):
         print(f"Empieza la pelea entre {r1.get_name()} y {r2.get_name()}")
-        actualm = r1
-        while r1.get_energy() > 0 and r2.get_energy() > 0:
-            mov = actualm.random_move()
+        r_current = r1
+        while r1.get__energy() >0 and r2.get_energy() > 0:
+            ataque = r_current.random_attack()
+            print(f"{r1.get_name()} = {round(r1.get_energy(),2)}")
+            print(f"{r2.get_name()} = {round(r2.get_energy(),2)}")
+
+            print(f"{r_current} usa {ataque.get_name()}")
+
+            if r_current == r1:
+                r_current = r2
+            else:
+                r_current = r1
+            
+            
 
 
 
