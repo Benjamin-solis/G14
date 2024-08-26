@@ -8,3 +8,24 @@ class attack:
         self.precision= precision
         self.recharge= recharge
         self.conteo= 0
+
+    def get_name(self):
+        return self.name
+
+    def get_type_attack(self):
+        return self.type_attack
+    
+    def get_objetive(self):
+        return self.objetive
+    
+    def get_damage(self):
+        return self.damage
+    
+    def get_precision(self):
+        return self.precision
+    
+    def get_recharge(self):
+        return self.recharge
+    
+
+    
