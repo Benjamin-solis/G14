@@ -21,3 +21,9 @@ class Robots:
     
     def restart_stats(self):
         self.energy = self.original_energy
+
+    def reduce_energy(self, amount):
+        self.energy -= amount
+        if self.energy < 0:
+            self.energy = 0
+

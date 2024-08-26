@@ -29,28 +29,31 @@ class liga:
             robot_1 = self.robots[i]
             for j in range(i+1, len(self.robots)):
                 robot_2 = self.robots[j]
-                self.pelea(robot_1, robot_2)
+                self.fight(robot_1, robot_2)
 
-    def pelea(self, r1, r2):
+    def fight(self, r1, r2):
         print(f"Empieza la pelea entre {r1.get_name()} y {r2.get_name()}")
         r_current = r1
-        while r1.get__energy() >0 and r2.get_energy() > 0:
+        while r1.get_energy() >0 and r2.get_energy() > 0:
             ataque = r_current.random_attack()
+
             print(f"{r1.get_name()} = {round(r1.get_energy(),2)}")
             print(f"{r2.get_name()} = {round(r2.get_energy(),2)}")
 
             print(f"{r_current} usa {ataque.get_name()}")
-        
+
             if r_current == r1:
+                r2.reduce_energy(ataque.get_damage())
                 r_current = r2
-            else:
+            else: 
+                r1.reduce_energy(ataque.get_damage())
                 r_current = r1
         
-        if r1.get__energy() == 0 and r2.get_energy() == 0:
+        if r1.get_energy() == 0 and r2.get_energy() == 0:
             print(f"Hubo un empate entre {r1.get_name()} y {r2.get_name()}")
             self.record[r1.get_name()]['Draw'] += 1
             self.record[r2.get_name()]['Draw'] += 1
-        elif r1.get__energy() > 0 and r2.get_energy() == 0:
+        elif r1.get_energy() > 0 and r2.get_energy() == 0:
             print(f'{r1.get_name()} gana la batalla')
             self.record[r1.get_name()]['Won'] += 1
             self.record[r1.get_name()]['Lost'] += 1
@@ -59,12 +62,10 @@ class liga:
             self.record[r2.get_name()]['Won'] += 1
             self.record[r2.get_name()]['Lost'] += 1
     
-        
-                
-                    
+                         
 a = liga()
-#a.load_robots('robots01.json')
-a.load_robots('c:/Users/altad2/Desktop/paradigmas/Tarea1_Paradigmas/robots01.json')
+a.load_robots('robots01.json')
+#a.load_robots('c:/Users/altad2/Desktop/paradigmas/Tarea1_Paradigmas/robots01.json')
 a.start()
 
                
