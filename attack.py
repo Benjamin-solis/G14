@@ -1,4 +1,4 @@
-class attack:
+class Attack:
     def __init__(self, name, type_attack, objetive, damage, precision, recharge):
 
         self.name= name 
