@@ -37,19 +37,22 @@ class liga:
             print(f"{r2.get_name()} = {round(r2.get_energy(),2)}")
 
             print(f"{r_current} usa {ataque.get_name()}")
-
+        
             if r_current == r1:
                 r_current = r2
             else:
                 r_current = r1
+        
+        if r1.get__energy() == 0 and r2.get_energy() == 0:
+            print(f"Hubo un empate entre {r1.get_name()} y {r2.get_name()}")
+            self.draw_reports[r1.get_name()]['Empates'] += 1
+            self.draw_reports[r2.get_name()]['Empates'] += 1
+        
             
-            
-
-
-
                 
                     
 a = liga()
+#a.load_robots('robots01.json')
 a.load_robots('c:/Users/altad2/Desktop/paradigmas/Tarea1_Paradigmas/robots01.json')
 a.start()
 
