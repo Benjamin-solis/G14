@@ -17,7 +17,3 @@ class Robots:
     
     def random_move(self):
         return random.choice(self.attacks)
-    
-robot = Robots("timmy", 100)
-print(robot.get_name())
-print(robot.get_energy())
