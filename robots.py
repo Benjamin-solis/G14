@@ -4,6 +4,7 @@ class Robots:
     def __init__(self, name, energy):
         self.name = name
         self.energy = energy
+        self.original_energy = energy
         self.attacks = []
         
     def get_name(self):
@@ -15,5 +16,8 @@ class Robots:
     def add_attack(self, attack):
         self.attacks.append(attack)
     
-    def random_move(self):
+    def random_attack(self):
         return random.choice(self.attacks)
+    
+    def restart_stats(self):
+        self.energy = self.original_energy
