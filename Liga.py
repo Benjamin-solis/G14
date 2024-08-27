@@ -59,14 +59,14 @@ class liga:
         elif r1.get_energy() > 0 and r2.get_energy() == 0:
             print(f'{r1.get_name()} gana la batalla\n')
             self.record[r1.get_name()]['Won'] += 1
-            self.record[r1.get_name()]['Lost'] += 1
+            self.record[r2.get_name()]['Lost'] += 1
             r1.restart_stats()
             r2.restart_stats()
             r_current.restart_stats()
         else: 
             print(f'{r2.get_name()} gana la batalla\n')
             self.record[r2.get_name()]['Won'] += 1
-            self.record[r2.get_name()]['Lost'] += 1
+            self.record[r1.get_name()]['Lost'] += 1
             r1.restart_stats()
             r2.restart_stats()
             r_current.restart_stats()
