@@ -63,12 +63,6 @@ class liga:
             print(f'{r1.get_name()} gana la batalla\n')
             self.record[r1.get_name()]['Won'] += 1
             self.record[r2.get_name()]['Lost'] += 1
-<<<<<<< HEAD
-        else:
-            print(f'{r2.get_name()} gana la batalla\n')
-            self.record[r2.get_name()]['Won'] += 1
-            self.record[r1.get_name()]['Lost'] += 1
-=======
             r1.restart_stats()
             r2.restart_stats()
             r_current.restart_stats()
@@ -81,7 +75,6 @@ class liga:
             r_current.restart_stats()
     
                          
->>>>>>> ce7cbb10afeef00226165146f548abcd24a7a6a8
 
         # Reiniciar las estadísticas al final de la pelea
         r1.restart_stats()
