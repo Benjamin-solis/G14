@@ -27,6 +27,12 @@ class Attack:
     def get_recharge(self):
         return self.recharge
     
+    def incrementar_conteo(self):
+        self.conteo +=1
+
+    def get_conteo(self): 
+        return self.conteo
+    
 
     
 
