@@ -35,7 +35,6 @@ class liga:
         print(f"Empieza la pelea entre {r1.get_name()} y {r2.get_name()}")
         r_current = r1
 
-        # Restablecer energía al inicio de la pelea
         r1.restart_stats()
         r2.restart_stats()
 
@@ -54,7 +53,7 @@ class liga:
                 r1.reduce_energy(ataque.get_damage())
                 r_current = r1
 
-        # Determinar el resultado de la pelea
+    
         if r1.get_energy() == 0 and r2.get_energy() == 0:
             print(f"Hubo un empate entre {r1.get_name()} y {r2.get_name()}\n")
             self.record[r1.get_name()]['Draw'] += 1
@@ -76,7 +75,7 @@ class liga:
     
                          
 
-        # Reiniciar las estadísticas al final de la pelea
+        
         r1.restart_stats()
         r2.restart_stats()
 
