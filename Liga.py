@@ -9,7 +9,7 @@ class liga:
         self.record = {}
 
     def load_robots(self, filename):
-        with open(filename, 'r') as t:
+        with open(filename, 'r', encoding='utf-8') as t:
             data = json.load(t)
             for ra in data['robots']:
                 robot = robots.Robots(ra['name'], ra['energy'])
@@ -37,10 +37,10 @@ class liga:
         while r1.get_energy() >0 and r2.get_energy() > 0:
             ataque = r_current.random_attack()
 
-            print(f"{r1.get_name()} = {round(r1.get_energy(),2)}")
-            print(f"{r2.get_name()} = {round(r2.get_energy(),2)}")
+            print(f"Energía de {r1.get_name()} = {round(r1.get_energy(),2)}")
+            print(f"Energía de {r2.get_name()} = {round(r2.get_energy(),2)}\n")
 
-            print(f"{r_current} usa {ataque.get_name()}")
+            print(f"{r_current.get_name()} usa {ataque.get_name()}")
 
             if r_current == r1:
                 r2.reduce_energy(ataque.get_damage())
@@ -63,10 +63,7 @@ class liga:
             self.record[r2.get_name()]['Lost'] += 1
     
                          
-a = liga()
-a.load_robots('robots01.json')
-#a.load_robots('c:/Users/altad2/Desktop/paradigmas/Tarea1_Paradigmas/robots01.json')
-a.start()
+
 
                
                 
