@@ -79,7 +79,6 @@ class liga:
             
             for i in list_temp:
                 del self.cooldown[i]
-            print(self.cooldown)
 
             ataque = r_current.random_attack()
 
