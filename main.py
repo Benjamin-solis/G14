@@ -13,3 +13,4 @@ if input("¿Desea un gráfico sobre las estadísticas de los ataques de cada rob
 
 victorias, ganador = t.ganador()
 print(f"El ganador de la gran Liga de Robots es {ganador} con {victorias} victorias!")
+print(t.ganador())

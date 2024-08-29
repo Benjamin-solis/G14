@@ -8,6 +8,7 @@ class liga:
         self.robots = []
         self.record = {}
         self.cooldown = {}
+        self.results = {}
 
     def load_robots(self, filename):
         with open(filename, 'r', encoding='utf-8') as t:
@@ -34,13 +35,26 @@ class liga:
 
     def ganador(self):
         max_victorias = -1
-        ganador = ""
+        ganadores = []
         for robot, victory in self.record.items():
             if victory['Won'] > max_victorias:
                 max_victorias = victory['Won']
-                ganador = robot
+                ganadores = [robot]
+            elif victory['Won'] == max_victorias:
+                ganadores.append(robot)
 
-        return (max_victorias, ganador)
+        if len(ganadores) == 1:
+            return (max_victorias, ganadores[0])
+        
+        if (self.results[ganadores[0]+" vs "+ganadores[1]] == ganadores[0]) or (self.results[ganadores[1]+" vs "+ganadores[0]] == ganadores[0]):
+            return (max_victorias, ganadores[0])
+        else:
+            return (max_victorias, ganadores[1])
+        
+
+
+
+        
 
 
         
@@ -112,6 +126,7 @@ class liga:
             print(f'{r1.get_name()} gana la batalla\n')
             self.record[r1.get_name()]['Won'] += 1
             self.record[r2.get_name()]['Lost'] += 1
+            self.results[r1.get_name()+" vs "+r2.get_name()] = r1.get_name()
             r1.restart_stats()
             r2.restart_stats()
             r_current.restart_stats()
@@ -119,6 +134,7 @@ class liga:
             print(f'{r2.get_name()} gana la batalla\n')
             self.record[r2.get_name()]['Won'] += 1
             self.record[r1.get_name()]['Lost'] += 1
+            self.results[r1.get_name()+" vs "+r2.get_name()] = r2.get_name()
             r1.restart_stats()
             r2.restart_stats()
             r_current.restart_stats()
