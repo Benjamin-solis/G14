@@ -16,3 +16,4 @@ for robot, victory in t.record.items():
 
 victorias, ganador = t.ganador()
 print(f"El ganador de la gran Liga de Robots es {ganador} con {victorias} victorias!")
+print(t.results)

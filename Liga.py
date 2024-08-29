@@ -2,6 +2,7 @@ import robots
 import attack
 import json
 import random
+import math
 
 class liga:
     def __init__(self):
@@ -46,10 +47,11 @@ class liga:
         if len(ganadores) == 1:
             return (max_victorias, ganadores[0])
         
-        if (self.results[ganadores[0]+" vs "+ganadores[1]] == ganadores[0]) or (self.results[ganadores[1]+" vs "+ganadores[0]] == ganadores[0]):
+        if (self.results.get(ganadores[0] + " vs " + ganadores[1]) == ganadores[0]) or (self.results.get(ganadores[1] + " vs " + ganadores[0]) == ganadores[0]):
             return (max_victorias, ganadores[0])
         else:
             return (max_victorias, ganadores[1])
+
         
 
 
@@ -60,7 +62,7 @@ class liga:
         
 
     def fight(self, r1, r2):
-        print(f"Empieza la pelea entre {r1.get_name()} y {r2.get_name()}")
+        print(f"Empieza la pelea entre {r1.get_name()} y {r2.get_name()}\n")
         r_current = r1
 
         r1.restart_stats()
@@ -82,23 +84,21 @@ class liga:
 
             ataque = r_current.random_attack()
 
-            while ataque.get_name() in self.cooldown:
-                print(f"El ataque {ataque.get_name()} no está disponible por {self.cooldown[ataque.get_name()]} turnos")
-                ataque = r_current.random_attack()
-                if ataque not in self.cooldown:
-                    break
-
-
             print(f"Energía de {r1.get_name()} = {round(r1.get_energy(), 2)}")
             print(f"Energía de {r2.get_name()} = {round(r2.get_energy(), 2)}\n")
 
-            
+            while r_current.get_name()+ataque.get_name() in self.cooldown:
+                print(f"El ataque {ataque.get_name()} de {r_current.get_name()} no está disponible por {int((self.cooldown[r_current.get_name()+ataque.get_name()])/2 + 1)} turnos\n")
+                ataque = r_current.random_attack()
+                if r_current.get_name()+ataque.get_name() not in self.cooldown:
+                    break
+
             if random.random() < (ataque.precision)/100:
                 print(f"{r_current.get_name()} usa {ataque.get_name()}")
                 print(f"Ha causado {ataque.get_damage()} de daño\n")
 
-                if ataque.get_recharge != 0:
-                    self.cooldown[ataque.get_name()] = 2*(ataque.get_recharge())+1
+                if ataque.get_recharge() > 0:
+                    self.cooldown[r_current.get_name()+ataque.get_name()] = 2*(ataque.get_recharge())+1
 
                 if r_current == r1:
                     r2.reduce_energy(ataque.get_damage())
@@ -107,12 +107,12 @@ class liga:
                     r1.reduce_energy(ataque.get_damage())
                     r_current = r1
             else:
-                print(f"¡Oh no, el ataque de {r_current.get_name()} ha fallado!")
+                print(f"¡Oh no, el ataque de {r_current.get_name()} ha fallado\n")
 
                 if r_current == r1:
                     r_current = r2
                 else:
-                    r_current == r1
+                    r_current = r1
 
 
     
@@ -120,6 +120,7 @@ class liga:
             print(f"Hubo un empate entre {r1.get_name()} y {r2.get_name()}\n")
             self.record[r1.get_name()]['Draw'] += 1
             self.record[r2.get_name()]['Draw'] += 1
+            self.cooldown = {}
             
         elif r1.get_energy() > 0:
             print(f'{r1.get_name()} gana la batalla\n')
@@ -129,6 +130,7 @@ class liga:
             r1.restart_stats()
             r2.restart_stats()
             r_current.restart_stats()
+            self.cooldown = {}
         else: 
             print(f'{r2.get_name()} gana la batalla\n')
             self.record[r2.get_name()]['Won'] += 1
@@ -137,6 +139,7 @@ class liga:
             r1.restart_stats()
             r2.restart_stats()
             r_current.restart_stats()
+            self.cooldown = {}
         
     
                          
