@@ -8,6 +8,7 @@ class liga:
     def __init__(self):
         self.robots = []
         self.record = {}
+        self.cooldown = {}
 
     def load_robots(self, filename):
         with open(filename, 'r', encoding='utf-8') as t:
@@ -40,14 +41,36 @@ class liga:
         r2.restart_stats()
 
         while r1.get_energy() > 0 and r2.get_energy() > 0:
+
+            list_temp = []
+
+            for t, valor in self.cooldown.items():
+                valor -= 1
+                if valor <= 0:
+                    list_temp.append(t)
+                else:
+                    self.cooldown[t] = valor
+            
+            for i in list_temp:
+                del self.cooldown[i]
+            print(self.cooldown)
+
             ataque = r_current.random_attack()
+
+            while ataque.get_name() in self.cooldown:
+                print(f"El ataque {ataque.get_name()} no está disponible por {self.cooldown[ataque.get_name()]} turnos")
+                ataque = r_current.random_attack()
+
 
             print(f"Energía de {r1.get_name()} = {round(r1.get_energy(), 2)}")
             print(f"Energía de {r2.get_name()} = {round(r2.get_energy(), 2)}\n")
 
+            
             if random.random() < (ataque.precision)/100:
                 print(f"{r_current.get_name()} usa {ataque.get_name()}")
-                print(f"Ha causado {ataque.get_damage()} de daño")
+                print(f"Ha causado {ataque.get_damage()} de daño\n")
+
+                self.cooldown[ataque.get_name()] = 2*(ataque.get_recharge())+1
 
                 if r_current == r1:
                     r2.reduce_energy(ataque.get_damage())
@@ -56,7 +79,7 @@ class liga:
                     r1.reduce_energy(ataque.get_damage())
                     r_current = r1
             else:
-                print(f"¡Oh no, el ataque ha fallado!")
+                print(f"¡Oh no, el ataque de {r_current.get_name()} ha fallado!")
 
                 if r_current == r1:
                     r_current = r2
@@ -91,6 +114,7 @@ class liga:
         
         r1.restart_stats()
         r2.restart_stats()
+
 
                
                 
