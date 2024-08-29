@@ -1,7 +1,6 @@
 import robots
 import attack
 import json
-import reportes
 import random
 
 class liga:
@@ -33,6 +32,19 @@ class liga:
                 robot_2 = self.robots[j]
                 self.fight(robot_1, robot_2)
 
+    def ganador(self):
+        max_victorias = -1
+        ganador = ""
+        for robot, victory in self.record.items():
+            if victory['Won'] > max_victorias:
+                max_victorias = victory['Won']
+                ganador = robot
+
+        return (max_victorias, ganador)
+
+
+        
+
     def fight(self, r1, r2):
         print(f"Empieza la pelea entre {r1.get_name()} y {r2.get_name()}")
         r_current = r1
@@ -60,6 +72,8 @@ class liga:
             while ataque.get_name() in self.cooldown:
                 print(f"El ataque {ataque.get_name()} no está disponible por {self.cooldown[ataque.get_name()]} turnos")
                 ataque = r_current.random_attack()
+                if ataque not in self.cooldown:
+                    break
 
 
             print(f"Energía de {r1.get_name()} = {round(r1.get_energy(), 2)}")
@@ -70,7 +84,8 @@ class liga:
                 print(f"{r_current.get_name()} usa {ataque.get_name()}")
                 print(f"Ha causado {ataque.get_damage()} de daño\n")
 
-                self.cooldown[ataque.get_name()] = 2*(ataque.get_recharge())+1
+                if ataque.get_recharge != 0:
+                    self.cooldown[ataque.get_name()] = 2*(ataque.get_recharge())+1
 
                 if r_current == r1:
                     r2.reduce_energy(ataque.get_damage())
@@ -114,6 +129,8 @@ class liga:
         
         r1.restart_stats()
         r2.restart_stats()
+
+
 
 
                
