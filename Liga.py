@@ -47,6 +47,7 @@ class liga:
 
             if random.random() < (ataque.precision)/100:
                 print(f"{r_current.get_name()} usa {ataque.get_name()}")
+                print(f"Ha causado {ataque.get_damage()} de daño")
 
                 if r_current == r1:
                     r2.reduce_energy(ataque.get_damage())
