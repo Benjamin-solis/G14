@@ -4,7 +4,7 @@ import reportes
 #ubi = input("Ingrese la ubicación del archivo .JSON")
 
 t = liga()
-t.load_robots('Robots_Diego8.json')
+t.load_robots('robots4_giaconi.json')
 t.start()
 
 if input("¿Desea un reporte de las victorias y derrotas de la Liga? SI/NO: ").upper() == "SI":

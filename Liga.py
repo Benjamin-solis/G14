@@ -71,8 +71,9 @@ class liga:
         while r1.get_energy() > 0 and r2.get_energy() > 0:
 
             list_temp = []
+            ata_nodis = []
 
-            r=0
+            
 
             for t, valor in self.cooldown.items():
                 valor -= 1
@@ -89,41 +90,40 @@ class liga:
             print(f"Energía de {r1.get_name()} = {round(r1.get_energy(), 2)}")
             print(f"Energía de {r2.get_name()} = {round(r2.get_energy(), 2)}\n")
 
-            while ((r < 10) and (r_current.get_name()+ataque.get_name() in self.cooldown)):
-                r += 1
+            while (r_current.get_name()+ataque.get_name() in self.cooldown):
                 print(f"El ataque {ataque.get_name()} de {r_current.get_name()} no está disponible por {int((self.cooldown[r_current.get_name()+ataque.get_name()])/2 + 1)} turnos\n")
+                ata_nodis.append(ataque)
                 ataque = r_current.random_attack()
+                if set(ata_nodis) == set(r_current.attacks):
+                    print(f"A {r_current.get_name()} no le quedan ataques disponibles, pierde tu turno")
+                    if r_current == r1:
+                        r_current = r2
+                    else:
+                        r_current = r1
+                    
                 if r_current.get_name()+ataque.get_name() not in self.cooldown:
                     break
-            if r == 10:
-                print(f"A {r_current.get_name()} no le quedan ataques disponibles, pierde tu turno")
+
+            if random.random() < (ataque.precision)/100:
+                print(f"{r_current.get_name()} usa {ataque.get_name()}")
+                print(f"Ha causado {ataque.get_damage()} de daño\n")
+
+                if ataque.get_recharge() > 0:
+                    self.cooldown[r_current.get_name()+ataque.get_name()] = 2*(ataque.get_recharge())+1
+
                 if r_current == r1:
-                        r2.reduce_energy(ataque.get_damage())
-                        r_current = r2
+                    r2.reduce_energy(ataque.get_damage())
+                    r_current = r2
                 else:
                     r1.reduce_energy(ataque.get_damage())
                     r_current = r1
             else:
-                if random.random() < (ataque.precision)/100:
-                    print(f"{r_current.get_name()} usa {ataque.get_name()}")
-                    print(f"Ha causado {ataque.get_damage()} de daño\n")
+                print(f"¡Oh no, el ataque de {r_current.get_name()} ha fallado\n")
 
-                    if ataque.get_recharge() > 0:
-                        self.cooldown[r_current.get_name()+ataque.get_name()] = 2*(ataque.get_recharge())+1
-
-                    if r_current == r1:
-                        r2.reduce_energy(ataque.get_damage())
-                        r_current = r2
-                    else:
-                        r1.reduce_energy(ataque.get_damage())
-                        r_current = r1
+                if r_current == r1:
+                    r_current = r2
                 else:
-                    print(f"¡Oh no, el ataque de {r_current.get_name()} ha fallado\n")
-
-                    if r_current == r1:
-                        r_current = r2
-                    else:
-                        r_current = r1
+                    r_current = r1
 
 
     
